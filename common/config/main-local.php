@@ -3,7 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=ec2-3-95-221-196.compute-1.amazonaws.com;dbname=qr_register',
+            'dsn' => 'mysql:host=database-1.c13g6f8uh76r.us-east-1.rds.amazonaws.com;dbname=qr_register',
             'username' => 'admin',
             'password' => 'qrregister',
             'charset' => 'utf8',
