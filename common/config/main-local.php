@@ -3,9 +3,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => "mysql:host={$_SERVER['RDS_HOSTNAME']};dbname={$_SERVER['RDS_DB_NAME']}",
-            'username' => $_SERVER['RDS_USERNAME'],
-            'password' => $_SERVER['RDS_PASSWORD'],
+            'dsn' => 'mysql:host=ec2-3-95-221-196.compute-1.amazonaws.com;dbname=qr_register',
+            'username' => 'admin',
+            'password' => 'qrregister',
             'charset' => 'utf8',
         ],
         'mailer' => [
