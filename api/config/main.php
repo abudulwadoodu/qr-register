@@ -31,6 +31,54 @@ return [
                 ],
             ],
         ],
+        'request' => [
+            'enableCookieValidation' => false,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
+//            'format' => yii\web\Response::FORMAT_JSON,
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+//                $response->format = $event->sender->format;
+
+                if ($response->data !== null && $response->format == 'json') { //} && Yii::$app->request->get('suppress_response_code')) {
+                    $data_index = (is_array(Yii::$app->controller->serializer) && Yii::$app->controller->serializer['collectionEnvelope']) ? Yii::$app->controller->serializer['collectionEnvelope'] : 'items';
+
+                    $meta = [
+                        'status' => $response->isSuccessful,
+                        'has_content' => (bool) count(isset($response->data[$data_index]) ? $response->data[$data_index] : $response->data),
+                        'message' => ''
+                    ];
+
+                    if (isset($response->data['meta_message'])) {
+                        $meta['message'] = $response->data['meta_message'];
+                        unset($response->data['meta_message']);
+                    }
+
+                    if ($response->isSuccessful) {
+                        /* if(!isset($response->data['items']) && !isset($response->data['meta_response_index']))
+                          $response->data = [Yii::$app->params['rest']['single-envelope'] => $response->data];
+                          else */
+                        if (isset($response->data['meta_response_index']))
+                            unset($response->data['meta_response_index']);
+
+                        $response->data = is_array($response->data) ? array_merge(['meta' => $meta], $response->data) : ['meta' => $meta];
+                    } else {
+                        if ($response->statusCode == 422)
+                            $meta['message'] = 'Validation error';
+
+                        $response->data = [
+                            'meta' => $meta,
+                            'errors' => $response->data
+                        ];
+                    }
+                    Yii::info($response->data);
+                }
+            },
+        ],
         'urlManager' => [
             'enablePrettyUrl' => false,
             'enableStrictParsing' => true,
@@ -43,6 +91,14 @@ return [
                         '{id}' => '<id:\\w+>'
                     ]
                     
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/user',
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>'
+                    ]
+
                 ]
             ],        
         ]

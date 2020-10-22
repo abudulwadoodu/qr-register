@@ -1,23 +1,23 @@
 <?php
 
-namespace backend\models;
+namespace api\modules\v1\models;
 
 use Yii;
 
 /**
- * This is the model class for table "paymenttype".
+ * This is the model class for table "payment_type".
  *
  * @property int $id
- * @property string $paymenttype
+ * @property string $payment_type
  */
-class Paymenttype extends \yii\db\ActiveRecord
+class PaymentType extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'paymenttype';
+        return 'payment_type';
     }
 
     /**
@@ -26,8 +26,8 @@ class Paymenttype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['paymenttype'], 'required'],
-            [['paymenttype'], 'string', 'max' => 50],
+            [['payment_type'], 'required'],
+            [['payment_type'], 'string', 'max' => 50],
         ];
     }
 
@@ -38,7 +38,7 @@ class Paymenttype extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'paymenttype' => 'Paymenttype',
+            'payment_type' => 'Payment Type',
         ];
     }
 }

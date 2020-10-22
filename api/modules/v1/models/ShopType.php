@@ -5,19 +5,19 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "shoptype".
+ * This is the model class for table "shop_type".
  *
  * @property int $id
- * @property string $shoptype
+ * @property string $shop_type
  */
-class Shoptype extends \yii\db\ActiveRecord
+class ShopType extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'shoptype';
+        return 'shop_type';
     }
 
     /**
@@ -26,8 +26,8 @@ class Shoptype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shoptype'], 'required'],
-            [['shoptype'], 'string', 'max' => 50],
+            [['shop_type'], 'required'],
+            [['shop_type'], 'string', 'max' => 50],
         ];
     }
 
@@ -38,7 +38,7 @@ class Shoptype extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'shoptype' => 'Shoptype',
+            'shop_type' => 'Shop Type',
         ];
     }
 }
